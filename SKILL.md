@@ -1,6 +1,29 @@
 ---
 name: camoufox
 description: Camoufox anti-detect browser workflow for hard targets that resist normal fetching or standard browser automation. Use when a site has strong anti-bot or fingerprint defenses, when a Firefox-based stealth engine is specifically useful, or when the user explicitly asks to try Camoufox.
+homepage: https://github.com/longlannet/camoufox
+metadata:
+  {
+    "openclaw":
+      {
+        "emoji": "🦊",
+        "requires":
+          {
+            "bins": ["python3"],
+            "scripts": ["scripts/visit.py"],
+          },
+        "install":
+          [
+            {
+              "id": "pip-camoufox",
+              "kind": "python",
+              "package": "camoufox",
+              "bins": ["python3"],
+              "label": "Install camoufox (python)",
+            },
+          ],
+      },
+  }
 ---
 
 # Camoufox
