@@ -25,11 +25,11 @@ bash scripts/check.sh
 
 ```bash
 /root/.openclaw/workspace/.venvs/camoufox/bin/python \
-  /root/.openclaw/workspace/skills/camoufox/scripts/visit.py \
+  {baseDir}/scripts/visit.py \
   "https://example.com" --mode title --headless --json
 
 /root/.openclaw/workspace/.venvs/camoufox/bin/python \
-  /root/.openclaw/workspace/skills/camoufox/scripts/visit.py \
+  {baseDir}/scripts/visit.py \
   "https://example.com" --mode full --headless --json
 ```
 
@@ -38,3 +38,9 @@ bash scripts/check.sh
 - 只有在目标站点较难对付时再用 Camoufox，普通页面优先用更轻量的工具。
 - `scripts/visit.py` 是这个 skill 的统一入口。
 - 如果包或浏览器资源缺失，重新运行 `scripts/install.sh`。
+
+## Runtime version boundary
+
+The install/check baseline is wrapper `0.5.6` and browser `152.0.4-beta.29`. The existing shared wrapper, matching browser version/hash metadata, and a real headless visit to `https://example.com` were verified during synchronization; no downgrade, download, or browser replacement was performed. The installer rejects existing wrappers other than its expected version or the explicitly supported `0.4.11` migration before changing files. Run `RUN_SMOKE=0 bash scripts/check.sh` for the exact metadata check without a browsing request; a successful version check does not prove arbitrary target-site access. Keep newer runtimes instead of downgrading them merely to satisfy an older skill pin.
+
+Camoufox keeps the existing shared venv. Its default screenshot path is also under the OpenClaw workspace; pass `--output` for an explicitly chosen platform/task output path.

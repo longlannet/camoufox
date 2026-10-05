@@ -1,6 +1,6 @@
 ---
-name: camoufox
-description: Camoufox anti-detect browser workflow for hard targets that resist normal fetching or standard browser automation. Use when a site has strong anti-bot or fingerprint defenses, when a Firefox-based stealth engine is specifically useful, or when the user explicitly asks to try Camoufox.
+name: "camoufox"
+description: "Use Camoufox for hard targets resisting normal fetching or browser automation; pinned 0.5.6 assets, downloads, proxy, cookies and screenshots."
 homepage: https://github.com/longlannet/camoufox
 metadata:
   {
@@ -17,7 +17,7 @@ metadata:
             {
               "id": "pip-camoufox",
               "kind": "python",
-              "package": "camoufox",
+              "package": "camoufox==0.5.6",
               "bins": ["python3"],
               "label": "Install camoufox (python)",
             },
@@ -53,5 +53,18 @@ bash scripts/install.sh
 ## Notes
 - Do not use Camoufox as the default browsing path.
 - `scripts/visit.py` is the unified entrypoint for this skill.
+- The installer pins wrapper `0.5.6` and browser `152.0.4-beta.29`.
+- Firefox download navigations, including RSS feeds, are returned as structured download results.
 - Use `--wait-selector`, `--proxy`, `--cookies`, or `--cookie-file` when a protected site needs more control.
 - Keep detailed human-facing usage in `README.md`.
+
+## Runtime version boundary
+
+The install/check baseline is wrapper `0.5.6` and browser `152.0.4-beta.29`. The existing shared wrapper, matching browser version/hash metadata, and a real headless visit to `https://example.com` were verified during synchronization; no downgrade, download, or browser replacement was performed. The installer rejects existing wrappers other than its expected version or the explicitly supported `0.4.11` migration before changing files. Run `RUN_SMOKE=0 bash scripts/check.sh` for the exact metadata check without a browsing request; a successful version check does not prove arbitrary target-site access. Keep newer runtimes instead of downgrading them merely to satisfy an older skill pin.
+
+Camoufox keeps the existing shared venv. Its default screenshot path is also under the OpenClaw workspace; pass `--output` for an explicitly chosen platform/task output path.
+
+## OpenClaw execution
+
+`{baseDir}` denotes this skill directory; substitute its resolved path before executing a shell command. Relative `scripts/` commands assume this directory as the working directory. Use the OpenClaw execution tool for the bundled scripts. Source synchronization does not install dependencies or copy credentials. Keep existing local configuration and environments unchanged; installation, browser downloads and paid API tests require separate authorization.
+The `/root/.openclaw/workspace/.venvs/` runtime is intentionally shared; do not relocate or copy it during skill synchronization.
